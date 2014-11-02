@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "Nu.h"
 
 @interface ViewController ()
 
@@ -16,12 +17,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    NSString *nupath = [[NSBundle mainBundle] pathForResource:@"my" ofType:@"nu"];
+    NSString *nustr = [NSString stringWithContentsOfFile:nupath encoding:NSUTF8StringEncoding error:NULL];
+    NSLog(@"%@", nustr);
+    if (nustr) {
+        [[Nu sharedParser] parseEval:nustr];
+    }
+
+    [self foo];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)foo
+{
+    NSLog(@"original foo");
+}
+
 
 @end
