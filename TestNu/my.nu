@@ -1,5 +1,6 @@
-(class ViewController
+(class MyClass is ViewController
     (- (void) foo is
-        (puts "this is nu foo")
+        (super foo)
+        (puts "this is MyClass::foo")
     )
 )

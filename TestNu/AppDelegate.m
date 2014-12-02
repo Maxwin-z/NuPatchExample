@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "Nu.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,32 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    NuInit();
+    
+    [[Nu sharedParser] parseEval:@"(load \"nu\")"];
+    [[Nu sharedParser] parseEval:@"(load \"test\")"];
+    
+    NSString *resourceDirectory = [[NSBundle mainBundle] resourcePath];
+    
+    NSArray *files = [[NSFileManager defaultManager]
+                      contentsOfDirectoryAtPath:resourceDirectory
+                      error:NULL];
+    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"^test_blocka.*nu$" options:0 error:NULL];
+    for (NSString *filename in files) {
+        NSUInteger numberOfMatches = [regex numberOfMatchesInString:filename
+                                                            options:0
+                                                              range:NSMakeRange(0, [filename length])];
+        if (numberOfMatches) {
+            NSLog(@"loading %@", filename);
+            NSString *s = [NSString stringWithContentsOfFile:[resourceDirectory stringByAppendingPathComponent:filename]
+                                                    encoding:NSUTF8StringEncoding
+                                                       error:NULL];
+            [[Nu sharedParser] parseEval:s];
+        }
+    }
+    NSLog(@"running tests");
+    [[Nu sharedParser] parseEval:@"(NuTestCase runAllTests)"];
+    
     return YES;
 }
 

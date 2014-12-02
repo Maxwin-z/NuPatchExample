@@ -26,6 +26,12 @@
     }
 
     [self foo];
+    
+    Class cls = NSClassFromString(@"MyClass");
+    if (cls) {
+        [[[cls alloc] init] foo];
+    }
+    NSLog(@"%@", cls);
 }
 
 - (void)didReceiveMemoryWarning {
