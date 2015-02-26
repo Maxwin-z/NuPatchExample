@@ -28,7 +28,7 @@
     NSArray *files = [[NSFileManager defaultManager]
                       contentsOfDirectoryAtPath:resourceDirectory
                       error:NULL];
-    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"^test_blocka.*nu$" options:0 error:NULL];
+    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"^test_blockasss.*nu$" options:0 error:NULL];
     for (NSString *filename in files) {
         NSUInteger numberOfMatches = [regex numberOfMatchesInString:filename
                                                             options:0
